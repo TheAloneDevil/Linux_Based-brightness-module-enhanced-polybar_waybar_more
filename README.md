@@ -27,12 +27,10 @@ This package provides an enhanced weather module for Linux desktop.
 mkdir -p ~/YourPath
 
 ### Step 2: Copy Files
-
 cp weather.sh ~/YourPath/
 cp user_modules.ini ~/YourPath/
 
 ### Step 3: Make Script Executable
-
 chmod +x ~/YourPath/weather.sh
 
 ### Step 4: Get API Key
