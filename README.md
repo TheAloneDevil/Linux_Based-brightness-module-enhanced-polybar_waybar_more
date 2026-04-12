@@ -1,14 +1,6 @@
 # Enhanced Weather Module for Linux Desktop
 
-This package provides an enhanced weather module for Linux desktop using NetworkManager.
-
-## What Does This Do?
-
-This provides a weather display module that shows:
-- Current temperature
-- Weather conditions with icons
-- Moon phase detection (full moon indicator)
-- Works with polybar, waybar, and similar
+This package provides an enhanced weather module for Linux desktop.
 
 ## Files Included
 
@@ -20,18 +12,17 @@ This provides a weather display module that shows:
 
 ## Features
 
-- Fetches weather data from OpenWeatherMap API
+- Fetches weather from OpenWeatherMap API
 - Custom weather icons
-- Moon phase detection (shows special icon during full moon)
+- Moon phase detection (full moon)
 - 30-minute update interval
-- Caching to reduce API calls
-- Temperature-based color coding
+- Caching
 
 ---
 
 ## Installation
 
-### Step 1: Create Directory
+### Step 1: Choose Location
 
 mkdir -p ~/YourPath
 
@@ -44,25 +35,33 @@ cp user_modules.ini ~/YourPath/
 
 chmod +x ~/YourPath/weather.sh
 
-### Step 4: Configure API Key
+### Step 4: Get API Key
 
 Edit weather.sh:
-- Get CITY_ID from https://openweathermap.org/cities
-- Get API_KEY from https://home.openweathermap.org/api_keys (create new one)
 
-Update these lines:
+**Getting CITY_ID:**
+1. Go to https://openweathermap.org/cities
+2. Search your city
+3. City ID is the number in URL (e.g., London = 2643743)
+   - Or ask ChatGPT: "What is the OpenWeatherMap city ID for [Your City]?"
+
+**Getting API_KEY:**
+1. Go to https://home.openweathermap.org/api_keys
+2. Sign up at https://openweathermap.org (if needed)
+3. Go to API Keys section
+4. Click "Create New API Key" - give it a name (e.g., "Newbar")
+5. Copy the key and paste in weather.sh
+
 ```bash
 CITY_ID="1234567"  # Your city ID
-API_KEY="your_api_key"  # Your API key
+API_KEY="your_key"  # Your API key
 ```
 
 ### Step 5: Update Paths
 
-Edit user_modules.ini - change ~/YourPath/ to your actual path.
+Edit user_modules.ini - change ~/YourPath/ to your path.
 
 ### Step 6: Add to Bar
-
-Add weather module to your polybar/waybar config.
 
 ---
 
@@ -74,6 +73,6 @@ Add weather module to your polybar/waybar config.
 
 ---
 
-## License & Credits
+## Credits
 
-Modified and enhanced for Linux desktop use.
+Modified for Linux desktop use.
