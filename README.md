@@ -110,7 +110,7 @@ modules-right = brightness1-control
 
 ## Requirements
 
-- Linux desktop with polybar
+- Linux desktop with polybar/Waybar or other
 - brightnessctl (for system backlight)
 - ddcutil (optional, for DDC/CI monitors)
 
