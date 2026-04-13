@@ -122,6 +122,30 @@ modules-right = network-wifi
 
 ---
 
+## Font Reference
+
+This module uses the following fonts (T-n = font-n+1):
+
+| Tag | Font Number | Font Name | Size |
+|-----|-------------|-----------|------|
+| T29 | font-29 | Iosevka Nerd Font | 17 |
+
+**Note:** Ensure these fonts are defined in your polybar config. Add to your `config.ini`:
+
+```ini
+font-29 = "Iosevka Nerd Font:size=17;4"
+```
+
+For icons, you may also need Material Icons:
+```ini
+font-11 = "Material Icons Sharp:size=14"
+font-12 = "Material Icons Sharp:size=16"
+font-13 = "Material Icons Sharp:size=18"
+font-14 = "Material Icons Sharp:size=20"
+```
+
+---
+
 ## Contribution
 
 This is a customized version of the original wifimenu created by Jesús Arenas (podobu). I, Anindra Mohan Trivedi, have modified it to add modern features and improvements.
