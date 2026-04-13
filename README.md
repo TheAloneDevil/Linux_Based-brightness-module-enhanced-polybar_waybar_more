@@ -1,11 +1,11 @@
-# Enhanced WiFi Menu for Linux Desktop
+# Enhanced Brightness Module for Polybar
 
-This package provides enhanced WiFi menu and status modules for Linux desktop.
+This package provides enhanced brightness modules for Linux desktop polybar.
 
 ## Files Included
 
-1. **wifimenu-podobu** - Main WiFi menu script
-2. **network-wifi.sh** - WiFi status display script
+1. **brightness.sh** - Main brightness script (with progress bar)
+2. **brightness1.sh** - Alternative brightness script (with dot indicators)
 3. **user_modules.ini** - Module configuration
 4. **README.md** - This file
 
@@ -13,56 +13,38 @@ This package provides enhanced WiFi menu and status modules for Linux desktop.
 
 ## Features
 
-- Network scanning with signal strength
-- Saved network detection
-- Try Again feature for changed passwords
-- Auto Connection toggle
-- Network Information menu
-- Remove All Saved Networks option
-- Works with rofi, wofi, dmenu
-
----
-
-<p align="center">
-  <img src="Screenshots/4.png" width="400"/>
-  <img src="Screenshots/2.png" width="400"/>
-  <img src="Screenshots/3.png" width="400"/>
-</p>
+- DDC/CI support for external monitors (via ddcutil)
+- System backlight fallback (via brightnessctl)
+- Visual brightness indicators (icons + progress)
+- Scroll to adjust brightness
+- Two visual styles: bar and dots
 
 ---
 
 ## Installation
 
-### Step 1: Create Directory
+### Step 1: Install Dependencies
+```bash
+# Required: ddcutil (for DDC/CI monitors) and brightnessctl (for system backlight)
+sudo apt install ddcutil brightnessctl
+```
+
+### Step 2: Create Directory
 ```bash
 mkdir -p ~/.config/polybar/forest/scripts
 ```
 
-### Step 2: Copy Files
+### Step 3: Copy Files
 ```bash
-cp wifimenu-podobu ~/.config/polybar/forest/scripts/
-cp network-wifi.sh ~/.config/polybar/forest/scripts/
+cp brightness.sh ~/.config/polybar/forest/scripts/
+cp brightness1.sh ~/.config/polybar/forest/scripts/
 cp user_modules.ini ~/.config/polybar/forest/scripts/
 ```
 
-### Step 3: Make Executable
+### Step 4: Make Executable
 ```bash
-chmod +x ~/.config/polybar/forest/scripts/wifimenu-podobu
-chmod +x ~/.config/polybar/forest/scripts/network-wifi.sh
-```
-
-### Step 4: Create Wrapper (Optional)
-Create `~/.config/polybar/forest/scripts/wifimenu.sh`:
-```bash
-#!/bin/bash
-while true; do
-    ~/.config/polybar/forest/scripts/wifimenu-podobu "$@"
-    [ $? -ne 42 ] && break
-done
-```
-Then make it executable:
-```bash
-chmod +x ~/.config/polybar/forest/scripts/wifimenu.sh
+chmod +x ~/.config/polybar/forest/scripts/brightness.sh
+chmod +x ~/.config/polybar/forest/scripts/brightness1.sh
 ```
 
 ### Step 5: Update Paths in user_modules.ini
@@ -70,26 +52,18 @@ Open `user_modules.ini` in a text editor and edit these specific lines:
 
 | Line | Edit This | Change To |
 |------|-----------|----------|
-| 5 | `exec = ~/YourPath/network-wifi.sh` | `exec = ~/.config/polybar/forest/scripts/network-wifi.sh` |
-| 10 | `label = "%{A1:~/YourPath/wifimenu.sh &:}%output%%{A}"` | `label = "%{A1:~/.config/polybar/forest/scripts/wifimenu.sh &:}%output%%{A}"` |
-| 11 | `click-left = ~/YourPath/wifimenu.sh` | `click-left = ~/.config/polybar/forest/scripts/wifimenu.sh` |
-
-After editing, the file should look like:
-```ini
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
-[module/network-wifi]
-type = custom/script
-exec = ~/.config/polybar/forest/scripts/network-wifi.sh
-interval = 1
-tail = true
-format = <label>
-format-foreground = ${color.foreground}
-label = "%{A1:~/.config/polybar/forest/scripts/wifimenu.sh &:}%output%%{A}"
-click-left = ~/.config/polybar/forest/scripts/wifimenu.sh
-
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-```
+| 5 | `exec = ~/.config/polybar/forest/scripts/brightness.sh get` | (keep as-is if using this path) |
+| 6 | `interval = 1` | (keep) |
+| 7 | `tail = true` | (keep) |
+| 8 | `format = <label>` | (keep) |
+| 9 | `format-prefix = "%{T1}"` | (keep) |
+| 10 | `label = %output%` | (keep) |
+| 11 | `scroll-up = ~/.config/polybar/forest/scripts/brightness.sh inc` | (adjust path if different) |
+| 12 | `scroll-down = ~/.config/polybar/forest/scripts/brightness.sh dec` | (adjust path if different) |
+| 13 | `cursor-scroll = ns-resize` | (keep) |
+| 17 | `exec = ~/.config/polybar/forest/scripts/brightness1.sh get` | (adjust path if different) |
+| 23 | `scroll-up = ~/.config/polybar/forest/scripts/brightness1.sh inc` | (adjust path if different) |
+| 24 | `scroll-down = ~/.config/polybar/forest/scripts/brightness1.sh dec` | (adjust path if different) |
 
 ### Step 6: Enable Module in polybar config
 Open your polybar config file (e.g., `~/.config/polybar/forest/config`):
@@ -99,26 +73,30 @@ Open your polybar config file (e.g., `~/.config/polybar/forest/config`):
 include-file = ~/.config/polybar/forest/scripts/user_modules.ini
 ```
 
-2. Find your bar section (e.g., `[bar/top]`) and add `network-wifi` to `modules-left` or `modules-right`:
+2. Find your bar section (e.g., `[bar/top]`) and add `brightness-control` or `brightness1-control` to `modules-right`:
 ```ini
 [bar/top]
-modules-left = network-wifi
-```
-Or if you want it on the right:
-```ini
-modules-right = network-wifi
+modules-right = brightness1-control
 ```
 
-**Note:** If you already have other modules listed, add `network-wifi` to the existing list (e.g., `modules-left = battery network-wifi`).
+**Note:** If you already have other modules listed, add to the existing list (e.g., `modules-right = battery_status brightness1-control`).
+
+---
+
+## Usage
+
+- **brightness.sh**: Shows percentage + 10-segment bar
+- **brightness1.sh**: Shows percentage + 7-dot indicator
+- Scroll up on module to increase brightness
+- Scroll down on module to decrease brightness
 
 ---
 
 ## Requirements
 
-- Linux desktop
-- NetworkManager
-- rofi or wofi or dmenu
-- Nerd Fonts
+- Linux desktop with polybar
+- brightnessctl (for system backlight)
+- ddcutil (optional, for DDC/CI monitors)
 
 ---
 
@@ -128,30 +106,30 @@ This module uses the following fonts (T-n = font-n+1):
 
 | Tag | Font Number | Font Name | Size |
 |-----|-------------|-----------|------|
-| T29 | font-28 | Iosevka Nerd Font | 12;4 |
+| T1 | font-0 | Iosevka Nerd Font | 10;4 |
+| T9 | font-9 | Iosevka Nerd Font | 17;5 |
+| T16 | font-16 | Iosevka Nerd Font | 11;-3 |
+| T19 | font-19 | Iosevka Nerd Font | 13;3 |
+| T28 | font-28 | Iosevka Nerd Font | 12;4 |
 
 **Note:** Ensure these fonts are defined in your polybar config. Add to your `config.ini`:
 
 ```ini
+font-0 = "Iosevka Nerd Font:size=10;4"
+font-9 = "Iosevka Nerd Font:size=17;5"
+font-16 = "Iosevka Nerd Font:size=11;-3"
+font-19 = "Iosevka Nerd Font:size=13;3"
 font-28 = "Iosevka Nerd Font:size=12;4"
-```
-
-For icons, you may also need Material Icons:
-```ini
-font-11 = "Material Icons Sharp:size=14"
-font-12 = "Material Icons Sharp:size=16"
-font-13 = "Material Icons Sharp:size=18"
-font-14 = "Material Icons Sharp:size=20"
 ```
 
 ---
 
 ## Contribution
 
-This is a customized version of the original wifimenu created by Jesús Arenas (podobu). I, Anindra Mohan Trivedi, have modified it to add modern features and improvements.
+This is a customized version of the original brightness module. I, Anindra Mohan Trivedi, have modified it to add modern features and improvements.
 
 I claim no rights to the original work — only to provide additional support and styling.
 
 ## Credits
 
-Based on wifimenu by Jesús Arenas (podobu)
+Based on brightness modules for polybar.
