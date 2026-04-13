@@ -128,8 +128,6 @@ font-27 = "Iosevka Nerd Font:size=14;4"
 
 This is a customized version of the original brightness module. I, Anindra Mohan Trivedi, have modified it to add modern features and improvements.
 
-I claim no rights to the original work — only to provide additional support and styling.
-
 ## Credits
 
 Based on brightness modules for polybar.
