@@ -1,6 +1,6 @@
-# Enhanced Brightness Module for Polybar
+# Enhanced Brightness Module for Linux Model ( Shell-Script )
 
-This package provides enhanced brightness modules for Linux desktop ( Shell-Script ).
+This package provides enhanced brightness modules for Linux desktop .
 
 ---
 
@@ -86,20 +86,20 @@ Open `user_modules.ini` in a text editor and edit these specific lines:
 | 24 | `scroll-down = ~/your_path/brightness1.sh dec` | (adjust path if different) |
 
 ### Step 6: Enable Module in config
-Open your polybar config file (e.g., `~/your_path/config.ini`):
+Open your config file (e.g., `~/your_path/config.ini`):
 
 1. Find the `[module/...]` section (around line 5-10) and add:
 ```ini
 include-file = ~/your_path/user_modules.ini
 ```
 
-2. Find your bar section (e.g., `[bar/top]`) and add `brightness-control` or `brightness1-control` to `modules-right`:
+2. Find your bar section (e.g., `[bar/top]`) and add `brightness-control` or `brightness1-control` to `modules-right/center/left`:
 ```ini
 [bar/top]
 modules-right = brightness1-control
 ```
 
-**Note:** If you already have other modules listed, add to the existing list (e.g., `modules-right = battery brightness1-control`).
+**Note:** If you already have other modules listed, add to the existing list (e.g., `modules-right/center/left = battery brightness1-control`).
 
 ---
 
