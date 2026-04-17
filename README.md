@@ -1,6 +1,6 @@
 # Enhanced Brightness Module for Polybar
 
-This package provides enhanced brightness modules for Linux desktop polybar.
+This package provides enhanced brightness modules for Linux desktop ( Shell-Script ).
 
 ---
 
@@ -72,7 +72,7 @@ Open `user_modules.ini` in a text editor and edit these specific lines:
 
 | Line | Edit This | Change To |
 |------|-----------|----------|
-| 5 | `exec = ~/your_path/brightness.sh get` | (keep as-is if using this path) |
+| 5 | `exec = ~/your_path/brightness.sh watch` | (keep as-is if using this path) |
 | 6 | `interval = 1` | (keep) |
 | 7 | `tail = true` | (keep) |
 | 8 | `format = <label>` | (keep) |
@@ -81,12 +81,12 @@ Open `user_modules.ini` in a text editor and edit these specific lines:
 | 11 | `scroll-up = ~/your_path/brightness.sh inc` | (adjust path if different) |
 | 12 | `scroll-down = ~/your_path/brightness.sh dec` | (adjust path if different) |
 | 13 | `cursor-scroll = ns-resize` | (keep) |
-| 17 | `exec = ~/your_path/brightness1.sh get` | (adjust path if different) |
+| 17 | `exec = ~/your_path/brightness1.sh watch` | (adjust path if different) |
 | 23 | `scroll-up = ~/your_path/brightness1.sh inc` | (adjust path if different) |
 | 24 | `scroll-down = ~/your_path/brightness1.sh dec` | (adjust path if different) |
 
-### Step 6: Enable Module in polybar config
-Open your polybar config file (e.g., `~/.config/polybar/forest/config`):
+### Step 6: Enable Module in config
+Open your polybar config file (e.g., `~/your_path/config.ini`):
 
 1. Find the `[module/...]` section (around line 5-10) and add:
 ```ini
@@ -99,7 +99,7 @@ include-file = ~/your_path/user_modules.ini
 modules-right = brightness1-control
 ```
 
-**Note:** If you already have other modules listed, add to the existing list (e.g., `modules-right = battery_status brightness1-control`).
+**Note:** If you already have other modules listed, add to the existing list (e.g., `modules-right = battery brightness1-control`).
 
 ---
 
@@ -132,7 +132,7 @@ This module uses the following fonts (font-n = T(n+1)):
 | T19 | font-18 | Iosevka Nerd Font | 6;2 |
 | T28 | font-27 | Iosevka Nerd Font | 14;4 |
 
-**Note:** Ensure these fonts are defined in your polybar config. Add to your `config.ini`:
+**Note:** Ensure these fonts are defined in your config. Add to your `config.ini`:
 
 ```ini
 font-0 = "Iosevka Nerd Font:size=10;4"
